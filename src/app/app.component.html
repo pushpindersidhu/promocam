@@ -1,0 +1,24 @@
+<div class="w-full h-screen flex flex-col">
+  <div class="flex items-center justify-evenly flex-row p-4">
+    <a
+      class="text-md font-semibold px-4 py-2 border-sky-500"
+      routerLinkActive="border-b-2"
+      routerLink="/list"
+    >
+      List
+    </a>
+    <a
+      class="text-md font-semibold px-4 py-2 border-sky-500"
+      routerLinkActive="border-b-2"
+      routerLink="/map"
+    >
+      Map
+    </a>
+  </div>
+
+  <div class="w-full grow">
+    <app-loading *ngIf="isLoading"></app-loading>
+    <router-outlet *ngIf="!isLoading"></router-outlet>
+  </div>
+
+</div>

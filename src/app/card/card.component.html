@@ -1,0 +1,51 @@
+<a
+  routerLink="/detail/{{ place.place_id }}"
+  *ngIf="place"
+  class="w-full h-28 flex items-center rounded-lg bg-gray-100 mt-4"
+>
+  <img class="rounded-l-lg w-28 h-28 object-cover" [src]="getPhotoUrl(place)" />
+  <div class="flex flex-col justify-start h-full p-2">
+    <div class="font-semibold text-gray-950">{{ place.name }}</div>
+    <div class="flex items-center text-sm">
+      <svg
+        class="w-5 h-5 text-green-600"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10 2a5 5 0 00-5 5c0 3.333 5 10 5 10s5-6.667 5-10a5 5 0 00-5-5zm0 7a2 2 0 100-4 2 2 0 000 4z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      {{ place.vicinity }}
+    </div>
+    <div
+      class="text-sm flex w-fit px-2 items-center
+    {{
+        place.rating < 3
+          ? 'bg-red-500'
+          : place.rating < 4
+          ? 'bg-yellow-500'
+          : 'bg-green-500'
+      }}
+     text-white rounded"
+    >
+      <svg
+        class="w-4 h-4 text-white"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10 3.879l2.146 4.387 4.804.698-3.478 3.392.82 4.778L10 14.763l-4.292 2.331.82-4.778-3.478-3.392 4.804-.698L10 3.879z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      {{ place.rating }}
+    </div>
+    <img class="w-4 h-4" [src]="place.icon" />
+  </div>
+</a>

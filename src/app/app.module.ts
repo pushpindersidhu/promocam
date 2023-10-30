@@ -3,10 +3,22 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CardComponent } from './card/card.component';
+import { GmapComponent } from './gmap/gmap.component';
+import { PlacesComponent } from './places/places.component';
+import { PlaceDetailsComponent } from './place-details/place-details.component';
+import { SearchComponent } from './search/search.component';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CardComponent,
+    GmapComponent,
+    PlacesComponent,
+    PlaceDetailsComponent,
+    SearchComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
