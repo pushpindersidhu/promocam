@@ -1,13 +1,7 @@
 <div class="p-4" *ngIf="placeDetails">
-  <div
-    id="carouselExampleCaptions"
-    class="relative"
-    data-te-carousel-init
-    data-te-ride="carousel"
-  >
+  <div class="relative">
     <div
       class="absolute bottom-0 left-0 right-0 z-[2] mx-[15%] mb-4 flex list-none justify-center p-0"
-      data-te-carousel-indicators
     >
       <button
         type="button"
@@ -24,9 +18,6 @@
     >
       <div
         class="relative float-left -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none mx-auto"
-        data-te-carousel-active
-        data-te-carousel-item
-        style="backface-visibility: hidden"
       >
         <img
           src="{{ photoUrl }}"
@@ -42,7 +33,7 @@
     </div>
 
     <button
-      class="absolute bottom-0 left-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
+      class="absolute bottom-0 left-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-black opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:font-bold hover:no-underline hover:opacity-90 hover:outline-none focus:font-bold focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
       type="button"
       (click)="prevPhoto()"
     >
@@ -68,7 +59,7 @@
       >
     </button>
     <button
-      class="absolute bottom-0 right-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
+      class="absolute bottom-0 right-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-black opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:font-bold hover:no-underline hover:opacity-90 hover:outline-none focus:font-bold focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
       type="button"
       (click)="nextPhoto()"
     >
@@ -95,32 +86,99 @@
     </button>
   </div>
 
-
-  <h2 class="text-3xl font-semibold mb-4">{{ placeDetails.name }}</h2>
-  <p class="text-lg text-gray-600 mb-4">{{ placeDetails.vicinity }}</p>
-  <div class="mb-4">
-    <img
-      src="{{ placeDetails.icon }}"
-      alt="Place Icon"
-      class="w-10 h-10 inline-block"
-    />
-    <p class="inline-block text-base text-gray-600 ml-2">
-      {{ placeDetails.types?.join(", ") }}
+  <div class="m-16">
+    <h2 class="text-3xl font-semibold mb-4">
+      {{ placeDetails.name }}
+      <img
+        src="{{ placeDetails.icon }}"
+        alt="Place Icon"
+        class="mx-2 w-6 h-6 inline-block mb-1"
+      />
+    </h2>
+    <div class="flex items-center mb-4">
+      <div class="flex" *ngIf="placeDetails.rating">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          *ngFor="let i of [1, 2, 3, 4, 5]"
+        >
+          <path
+            [ngClass]="{
+              'text-yellow-500': placeDetails.rating >= i,
+              'text-gray-300': placeDetails.rating < i
+            }"
+            fill="currentColor"
+            d="m9.362 9.158l-5.268.584c-.19.023-.358.15-.421.343s0
+          .394.14.521c1.566 1.429 3.919 3.569 3.919 3.569c-.002 0-.646
+          3.113-1.074 5.19a.496.496 0 0 0 .734.534c1.844-1.048 4.606-2.624
+          4.606-2.624l4.604 2.625c.168.092.378.09.541-.029a.5.5 0 0 0
+          .195-.505l-1.071-5.191l3.919-3.566a.499.499 0 0
+          0-.28-.865c-2.108-.236-5.269-.586-5.269-.586l-2.183-4.83a.499.499 0 0
+          0-.909 0l-2.183 4.83z"
+          />
+        </svg>
+      </div>
+    </div>
+    <p class="text-md text-gray-700 mb-4">
+      {{ placeDetails.formatted_address }}
     </p>
+    <p class="text-md text-gray-700 mb-2">
+      Status: {{ placeDetails.business_status }}
+    </p>
+
+    <h3 class="text-xl font-semibold mt-4 mb-2">Opening Hours:</h3>
+    <ul class="list-disc pl-6">
+      <li *ngFor="let period of placeDetails.opening_hours?.periods">
+        {{ getDayName(period.open.day) }}: {{ formatTime(period.open.time) }} -
+        {{ formatTime(period.close?.time || "") }}
+      </li>
+    </ul>
+
+    <h3 class="text-xl font-semibold mt-4 mb-2">
+      Reviews ({{ placeDetails.reviews?.length }})
+    </h3>
+
+    <div
+      class="flex flex-col w-full bg-gray-100 rounded-lg p-4 my-4"
+      *ngFor="let review of placeDetails.reviews"
+    >
+      <div class="flex flex-row items-center">
+        <img
+          src="{{ review.profile_photo_url }}"
+          alt="Profile Photo"
+          class="w-12 h-12 rounded-full mr-4"
+        />
+        <span class="font-bold text-sm"> {{ review.author_name }} </span>
+        <div
+          class="flex flex-row items-center justify-end grow text-sm ml-auto"
+        >
+          {{ review.relative_time_description }}
+        </div>
+      </div>
+
+      <div
+        class="flex flex-row items-center my-3"
+        *ngIf="review.rating"
+      >
+        <span
+          *ngFor="let i of [1, 2, 3, 4, 5]"
+          class="w-8 h-5 ml-1 rounded-md"
+          [ngClass]="{
+            'bg-red-500': review.rating < 3 && i <= review.rating,
+            'bg-yellow-500':
+              review.rating >= 3 && review.rating < 4 && i <= review.rating,
+            'bg-green-500': review.rating >= 4 && i <= review.rating,
+            'bg-gray-300': i > review.rating
+          }"
+        ></span>
+      </div>
+      <p class="text-md my-4 text-ellipsis line-clamp-3
+      ">{{ review.text }}</p>
+
+
+      
+    </div>
   </div>
-  <p class="text-lg font-semibold mb-2">
-    Business Status: {{ placeDetails.business_status }}
-  </p>
-  <p class="text-lg mb-4">Rating: {{ placeDetails.rating }}</p>
-  <h3 class="text-xl font-semibold mb-2">Address:</h3>
-  <ul class="list-disc pl-6">
-    <li>{{ placeDetails.formatted_address }}</li>
-  </ul>
-  <h3 class="text-xl font-semibold mt-4 mb-2">Opening Hours:</h3>
-  <ul class="list-disc pl-6">
-    <li *ngFor="let period of placeDetails.opening_hours?.periods">
-      {{ getDayName(period.open.day) }}: {{ formatTime(period.open.time) }} -
-      {{ formatTime(period.close?.time || "") }}
-    </li>
-  </ul>
 </div>
