@@ -1,0 +1,53 @@
+{
+  "version": "1",
+  "cognitoConfig": {
+    "identityPoolName": "promocam0e156cba_identitypool_0e156cba",
+    "allowUnauthenticatedIdentities": false,
+    "resourceNameTruncated": "promoc0e156cba",
+    "userPoolName": "promocam0e156cba_userpool_0e156cba",
+    "autoVerifiedAttributes": [
+      "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+      "SMS Text Message"
+    ],
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+      "email"
+    ],
+    "aliasAttributes": [],
+    "userpoolClientGenerateSecret": false,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+      "email"
+    ],
+    "userpoolClientReadAttributes": [
+      "email"
+    ],
+    "userpoolClientLambdaRole": "promoc0e156cba_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": false,
+    "sharedId": "0e156cba",
+    "resourceName": "promocam0e156cba",
+    "authSelections": "identityPoolAndUserPool",
+    "useDefault": "defaultSocial",
+    "hostedUI": true,
+    "usernameAttributes": [
+      "email"
+    ],
+    "hostedUIDomainName": "promocam0e156cba-0e156cba",
+    "authProvidersUserPool": [],
+    "hostedUIProviderMeta": "[]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://main.d1yvgfozktnyg2.amplifyapp.com/\",\"http://localhost:4200/\"],\"LogoutURLs\":[\"https://main.d1yvgfozktnyg2.amplifyapp.com/\",\"http://localhost:4200/\"]}",
+    "userPoolGroupList": [],
+    "serviceName": "Cognito",
+    "usernameCaseSensitive": false,
+    "useEnabledMfas": true
+  }
+}
