@@ -1,5 +1,6 @@
 import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { LocationService } from './location.service';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { LocationService } from './location.service';
 export class AppComponent {
   isLoading = false;
 
-  constructor(private locationService: LocationService) {
+  constructor(private locationService: LocationService, public auth: AuthService) {
     this.locationService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
