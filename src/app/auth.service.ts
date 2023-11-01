@@ -1,49 +1,40 @@
 import { Injectable } from '@angular/core';
-import { Hub, Auth } from 'aws-amplify';
-import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types';
+import { Auth, CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { Hub, ICredentials } from '@aws-amplify/core';
+import { Subject, Observable } from 'rxjs';
+import { CognitoUser } from 'amazon-cognito-identity-js';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  user: any;
-  loading: boolean;
+  public loggedIn: boolean = false;
+
+  private _authState: Subject<CognitoUser | any> = new Subject<
+    CognitoUser | any
+  >();
+  authState: Observable<CognitoUser | any> = this._authState.asObservable();
+
+  public static SIGN_IN = 'signIn';
+  public static SIGN_OUT = 'signOut';
 
   constructor() {
-    this.user = null;
-    this.loading = true;
-
-    Hub.listen('auth', ({ payload }) => {
-      if (payload.event === 'signIn') {
-        this.getUser();
-      }
-      if (payload.event === 'signOut') {
-        this.user = null;
-        this.loading = false;
+    Hub.listen('auth', (data) => {
+      const { channel, payload } = data;
+      if (channel === 'auth') {
+        this._authState.next(payload.event);
       }
     });
-    this.getUser();
   }
 
-  async getUser() {
-    try {
-      const token = await Auth.currentAuthenticatedUser();
-      this.user = token;
-      this.loading = false;
-    } catch (err) {
-      console.log(err);
-      this.user = null;
-      this.loading = false;
-    }
+  async signOut(): Promise<any> {
+    await Auth.signOut();
+    return (this.loggedIn = false);
   }
 
-  async signIn() {
-    Auth.federatedSignIn({
+  googleSocialSignIn(): Promise<ICredentials> {
+    return Auth.federatedSignIn({
       provider: CognitoHostedUIIdentityProvider.Google,
     });
-  }
-
-  async signOut() {
-    await Auth.signOut();
   }
 }

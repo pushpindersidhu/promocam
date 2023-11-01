@@ -8,14 +8,14 @@ import { default as config } from './aws-exports';
 const isLocalhost = !!(window.location.hostname === 'localhost');
 
 const [productionRedirectSignIn, localRedirectSignIn] =
-  config.oauth.redirectSignIn.split(',');
+  config['oauth'].redirectSignIn.split(',');
 const [productionRedirectSignOut, localRedirectSignOut] =
-  config.oauth.redirectSignOut.split(',');
+  config['oauth'].redirectSignOut.split(',');
 
 const updatedAwsConfig = {
   ...config,
   oauth: {
-    ...config.oauth,
+    ...config['oauth'],
     redirectSignIn: isLocalhost
       ? localRedirectSignIn
       : productionRedirectSignIn,

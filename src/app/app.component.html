@@ -1,4 +1,13 @@
 <div class="w-full h-screen flex flex-col">
+  <div
+    class="flex items-center justify-between px-8 flex-row w-full h-16 shrink-0 bg-gray-100"
+  >
+    <a class="text-md font-semibold" routerLink="/">PromoCam</a>
+
+    <button class="px-4 py-2 border-[1px] text-sm rounded-md border-sky-500" (click)="signInWithGoogle()">
+      Sign in with Google
+    </button>
+  </div>
   <div class="flex items-center justify-evenly flex-row p-4">
     <a
       class="text-md font-semibold px-4 py-2 border-sky-500"
@@ -20,5 +29,4 @@
     <app-loading *ngIf="isLoading"></app-loading>
     <router-outlet *ngIf="!isLoading"></router-outlet>
   </div>
-
 </div>
