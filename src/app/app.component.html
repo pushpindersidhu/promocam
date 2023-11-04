@@ -4,8 +4,23 @@
   >
     <a class="text-md font-semibold" routerLink="/">PromoCam</a>
 
-    <button class="px-4 py-2 border-[1px] text-sm rounded-md border-sky-500" (click)="signInWithGoogle()">
+    <!-- show username if logged in -->
+    <div *ngIf="isAuthenticated" class="text-md font-semibold">
+      {{ username }}
+    </div>
+    <button
+      class="px-4 py-2 border-[1px] text-sm rounded-md border-sky-500"
+      (click)="signInWithGoogle()"
+      *ngIf="!isAuthenticated"
+    >
       Sign in with Google
+    </button>
+    <button
+      class="px-4 py-2 border-[1px] text-sm rounded-md border-sky-500"
+      (click)="signOut()"
+      *ngIf="isAuthenticated"
+    >
+      Sign out
     </button>
   </div>
   <div class="flex items-center justify-evenly flex-row p-4">
@@ -25,7 +40,7 @@
     </a>
   </div>
 
-  <div class="w-full grow">
+  <div class="w-full grow px-4">
     <app-loading *ngIf="isLoading"></app-loading>
     <router-outlet *ngIf="!isLoading"></router-outlet>
   </div>
