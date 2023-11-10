@@ -9,6 +9,7 @@ import { PlacesComponent } from './places/places.component';
 import { PlaceDetailsComponent } from './place-details/place-details.component';
 import { SearchComponent } from './search/search.component';
 import { LoadingComponent } from './loading/loading.component';
+import { VideosComponent } from './videos/videos.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { LoadingComponent } from './loading/loading.component';
     PlaceDetailsComponent,
     SearchComponent,
     LoadingComponent,
+    VideosComponent,
   ],
   imports: [
     BrowserModule,
