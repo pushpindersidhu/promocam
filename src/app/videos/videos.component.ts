@@ -51,6 +51,7 @@ export class VideosComponent implements OnInit {
     const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
+          (entry.target as HTMLVideoElement).muted = this.muted;
           (entry.target as HTMLVideoElement).play();
         } else {
           (entry.target as HTMLVideoElement).pause();
