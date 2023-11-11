@@ -1,0 +1,16 @@
+{
+  "resourceName": "videos",
+  "policyUUID": "d349594e",
+  "bucketName": "promocam230ef6efbf964db494dd1b2c7abdce7a",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

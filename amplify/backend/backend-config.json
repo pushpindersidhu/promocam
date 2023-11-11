@@ -28,5 +28,16 @@
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
     }
+  },
+  "storage": {
+    "dynamo14fc1132": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
+    "videos": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
+    }
   }
 }

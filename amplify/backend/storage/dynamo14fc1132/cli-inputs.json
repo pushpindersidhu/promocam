@@ -1,0 +1,10 @@
+{
+  "resourceName": "dynamo14fc1132",
+  "tableName": "reviews",
+  "partitionKey": {
+    "fieldName": "id",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}
