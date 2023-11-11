@@ -7,10 +7,10 @@ import { VideosComponent } from './videos/videos.component';
 
 const routes: Routes = [
   { path: 'map', component: GmapComponent },
-  { path: 'list', component: PlacesComponent },
-  { path: 'detail/:id', component: PlaceDetailsComponent },
+  { path: 'places', component: PlacesComponent },
+  { path: 'places/:id', component: PlaceDetailsComponent },
   { path: 'videos', component: VideosComponent },
-  { path: '', redirectTo: '/list', pathMatch: 'full' },
+  { path: '', redirectTo: '/places', pathMatch: 'full' },
 ];
 
 @NgModule({
