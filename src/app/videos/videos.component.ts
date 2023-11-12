@@ -61,7 +61,17 @@ export class VideosComponent implements OnInit {
   }
 
   async getReviews() {
-    const result = await API.graphql(graphqlOperation(listReviews));
+    const result = await API.graphql(
+      graphqlOperation(listReviews, {
+        filter: {
+          pid: {
+            eq: 'ChIJV0ymi4ktflMRRjFFeqmhJC0',
+          },
+        },
+        limit: 100,
+      })
+    );
+
     const reviews = (result as { data: ListReviewsQuery; errors: any[] }).data
       .listReviews?.items as Review[];
 
