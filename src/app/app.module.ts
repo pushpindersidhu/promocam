@@ -10,6 +10,8 @@ import { PlaceDetailsComponent } from './place-details/place-details.component';
 import { SearchComponent } from './search/search.component';
 import { LoadingComponent } from './loading/loading.component';
 import { VideosComponent } from './videos/videos.component';
+import { UploadComponent } from './upload/upload.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,10 +23,12 @@ import { VideosComponent } from './videos/videos.component';
     SearchComponent,
     LoadingComponent,
     VideosComponent,
+    UploadComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

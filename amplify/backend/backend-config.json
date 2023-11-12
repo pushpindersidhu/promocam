@@ -1,4 +1,22 @@
 {
+  "api": {
+    "promocam": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
   "auth": {
     "promocam0e156cba": {
       "customAuth": false,
@@ -29,12 +47,9 @@
       "service": "Cognito"
     }
   },
+  "function": {},
   "storage": {
-    "dynamo14fc1132": {
-      "providerPlugin": "awscloudformation",
-      "service": "DynamoDB"
-    },
-    "videos": {
+    "promocam": {
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "S3"

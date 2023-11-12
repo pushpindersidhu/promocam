@@ -1,10 +1,14 @@
 import {
   Component,
   ElementRef,
+  NgZone,
   OnInit,
   QueryList,
   ViewChildren,
 } from '@angular/core';
+import { API, graphqlOperation, Storage } from 'aws-amplify';
+import { listReviews } from 'src/graphql/queries';
+import { ListReviewsQuery, Review } from 'src/API';
 
 @Component({
   selector: 'app-videos',
@@ -25,29 +29,17 @@ export class VideosComponent implements OnInit {
     });
   }
 
-  videos = [
-    {
-      url: 'https://promocam230ef6efbf964db494dd1b2c7abdce7a141802-dev.s3.us-west-1.amazonaws.com/10000000_962908494772126_8499920610684276092_n.mp4',
-    },
-    {
-      url: 'https://promocam230ef6efbf964db494dd1b2c7abdce7a141802-dev.s3.us-west-1.amazonaws.com/120694194_200402133075910_8843272636753577936_n.mp4',
-    },
-    {
-      url: 'https://promocam230ef6efbf964db494dd1b2c7abdce7a141802-dev.s3.us-west-1.amazonaws.com/165411836_333246639436166_5440819113394281133_n.mp4',
-    },
-    {
-      url: 'https://promocam230ef6efbf964db494dd1b2c7abdce7a141802-dev.s3.us-west-1.amazonaws.com/333224036_318957977547545_4540424466466847770_n.mp4',
-    },
-    {
-      url: 'https://promocam230ef6efbf964db494dd1b2c7abdce7a141802-dev.s3.us-west-1.amazonaws.com/53719457_651037963860751_1952520752597996374_n.mp4',
-    },
-  ];
+  reviews: (Review & { videoUrl: string })[] = [];
 
-  constructor() {}
+  constructor(private ngZone: NgZone) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.ngZone.run(() => {
+      this.getReviews();
+    });
+  }
 
-  ngAfterViewInit() {
+  onVideoLoad(videoPlayer: HTMLVideoElement) {
     const options = {
       root: null,
       rootMargin: '0px',
@@ -57,20 +49,27 @@ export class VideosComponent implements OnInit {
     const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          (entry.target as HTMLVideoElement).muted = this.muted;
-          (entry.target as HTMLVideoElement).play();
+          videoPlayer.muted = this.muted;
+          videoPlayer.play();
         } else {
-          (entry.target as HTMLVideoElement).pause();
+          videoPlayer.pause();
         }
       });
     }, options);
 
-    this.videoPlayers.forEach((videoPlayer) => {
-      observer.observe(videoPlayer.nativeElement);
-    });
+    observer.observe(videoPlayer);
   }
 
-  onVideoLoad(videoPlayer: HTMLVideoElement) {
-    console.log('Video metadata loaded:', videoPlayer);
+  async getReviews() {
+    const result = await API.graphql(graphqlOperation(listReviews));
+    const reviews = (result as { data: ListReviewsQuery; errors: any[] }).data
+      .listReviews?.items as Review[];
+
+    const promises = reviews.map(async (review) => {
+      const videoUrl = await Storage.get(review.video, { expires: 60 });
+      return { ...review, videoUrl };
+    });
+
+    this.reviews = await Promise.all(promises);
   }
 }

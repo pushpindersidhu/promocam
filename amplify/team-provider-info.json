@@ -16,8 +16,10 @@
         "promocam0e156cba": {}
       },
       "storage": {
-        "dynamo14fc1132": {},
-        "videos": {}
+        "promocam": {}
+      },
+      "api": {
+        "promocam": {}
       }
     }
   }

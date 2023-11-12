@@ -18,7 +18,7 @@ export class AppComponent {
     private zone: NgZone
   ) {
     this.locationService.isLoading$.subscribe((isLoading) => {
-      this.isLoading = isLoading;
+      this.isLoading = false;
     });
     this.auth.user.subscribe((user) => {
       this.zone.run(() => {

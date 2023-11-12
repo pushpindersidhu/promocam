@@ -1,4 +1,11 @@
 export type AmplifyDependentResourcesAttributes = {
+  "api": {
+    "promocam": {
+      "GraphQLAPIEndpointOutput": "string",
+      "GraphQLAPIIdOutput": "string",
+      "GraphQLAPIKeyOutput": "string"
+    }
+  },
   "auth": {
     "promocam0e156cba": {
       "AppClientID": "string",
@@ -13,15 +20,7 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "storage": {
-    "dynamo14fc1132": {
-      "Arn": "string",
-      "Name": "string",
-      "PartitionKeyName": "string",
-      "PartitionKeyType": "string",
-      "Region": "string",
-      "StreamArn": "string"
-    },
-    "videos": {
+    "promocam": {
       "BucketName": "string",
       "Region": "string"
     }
