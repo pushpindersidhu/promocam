@@ -5,6 +5,7 @@ input AMPLIFY {
 } # FOR TESTING ONLY!
 type Review @model {
   id: ID!
+  pid: String!
   uid: String!
   title: String!
   description: String
