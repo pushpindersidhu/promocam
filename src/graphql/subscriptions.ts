@@ -11,6 +11,7 @@ type GeneratedSubscription<InputType, OutputType> = string & {
 export const onCreateReview = /* GraphQL */ `subscription OnCreateReview($filter: ModelSubscriptionReviewFilterInput) {
   onCreateReview(filter: $filter) {
     id
+    pid
     uid
     title
     description
@@ -27,6 +28,7 @@ export const onCreateReview = /* GraphQL */ `subscription OnCreateReview($filter
 export const onUpdateReview = /* GraphQL */ `subscription OnUpdateReview($filter: ModelSubscriptionReviewFilterInput) {
   onUpdateReview(filter: $filter) {
     id
+    pid
     uid
     title
     description
@@ -43,6 +45,7 @@ export const onUpdateReview = /* GraphQL */ `subscription OnUpdateReview($filter
 export const onDeleteReview = /* GraphQL */ `subscription OnDeleteReview($filter: ModelSubscriptionReviewFilterInput) {
   onDeleteReview(filter: $filter) {
     id
+    pid
     uid
     title
     description

@@ -11,6 +11,7 @@ type GeneratedQuery<InputType, OutputType> = string & {
 export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
   getReview(id: $id) {
     id
+    pid
     uid
     title
     description
@@ -29,6 +30,7 @@ export const listReviews = /* GraphQL */ `query ListReviews(
   listReviews(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      pid
       uid
       title
       description

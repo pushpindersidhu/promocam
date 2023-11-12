@@ -14,6 +14,7 @@ export const createReview = /* GraphQL */ `mutation CreateReview(
 ) {
   createReview(input: $input, condition: $condition) {
     id
+    pid
     uid
     title
     description
@@ -33,6 +34,7 @@ export const updateReview = /* GraphQL */ `mutation UpdateReview(
 ) {
   updateReview(input: $input, condition: $condition) {
     id
+    pid
     uid
     title
     description
@@ -52,6 +54,7 @@ export const deleteReview = /* GraphQL */ `mutation DeleteReview(
 ) {
   deleteReview(input: $input, condition: $condition) {
     id
+    pid
     uid
     title
     description

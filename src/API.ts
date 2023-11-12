@@ -4,6 +4,7 @@
 
 export type CreateReviewInput = {
   id?: string | null,
+  pid: string,
   uid: string,
   title: string,
   description?: string | null,
@@ -11,6 +12,7 @@ export type CreateReviewInput = {
 };
 
 export type ModelReviewConditionInput = {
+  pid?: ModelStringInput | null,
   uid?: ModelStringInput | null,
   title?: ModelStringInput | null,
   description?: ModelStringInput | null,
@@ -63,6 +65,7 @@ export type ModelSizeInput = {
 export type Review = {
   __typename: "Review",
   id: string,
+  pid: string,
   uid: string,
   title: string,
   description?: string | null,
@@ -73,6 +76,7 @@ export type Review = {
 
 export type UpdateReviewInput = {
   id: string,
+  pid?: string | null,
   uid?: string | null,
   title?: string | null,
   description?: string | null,
@@ -85,6 +89,7 @@ export type DeleteReviewInput = {
 
 export type ModelReviewFilterInput = {
   id?: ModelIDInput | null,
+  pid?: ModelStringInput | null,
   uid?: ModelStringInput | null,
   title?: ModelStringInput | null,
   description?: ModelStringInput | null,
@@ -118,6 +123,7 @@ export type ModelReviewConnection = {
 
 export type ModelSubscriptionReviewFilterInput = {
   id?: ModelSubscriptionIDInput | null,
+  pid?: ModelSubscriptionStringInput | null,
   uid?: ModelSubscriptionStringInput | null,
   title?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
@@ -165,6 +171,7 @@ export type CreateReviewMutation = {
   createReview?:  {
     __typename: "Review",
     id: string,
+    pid: string,
     uid: string,
     title: string,
     description?: string | null,
@@ -183,6 +190,7 @@ export type UpdateReviewMutation = {
   updateReview?:  {
     __typename: "Review",
     id: string,
+    pid: string,
     uid: string,
     title: string,
     description?: string | null,
@@ -201,6 +209,7 @@ export type DeleteReviewMutation = {
   deleteReview?:  {
     __typename: "Review",
     id: string,
+    pid: string,
     uid: string,
     title: string,
     description?: string | null,
@@ -218,6 +227,7 @@ export type GetReviewQuery = {
   getReview?:  {
     __typename: "Review",
     id: string,
+    pid: string,
     uid: string,
     title: string,
     description?: string | null,
@@ -239,6 +249,7 @@ export type ListReviewsQuery = {
     items:  Array< {
       __typename: "Review",
       id: string,
+      pid: string,
       uid: string,
       title: string,
       description?: string | null,
@@ -258,6 +269,7 @@ export type OnCreateReviewSubscription = {
   onCreateReview?:  {
     __typename: "Review",
     id: string,
+    pid: string,
     uid: string,
     title: string,
     description?: string | null,
@@ -275,6 +287,7 @@ export type OnUpdateReviewSubscription = {
   onUpdateReview?:  {
     __typename: "Review",
     id: string,
+    pid: string,
     uid: string,
     title: string,
     description?: string | null,
@@ -292,6 +305,7 @@ export type OnDeleteReviewSubscription = {
   onDeleteReview?:  {
     __typename: "Review",
     id: string,
+    pid: string,
     uid: string,
     title: string,
     description?: string | null,
