@@ -17,13 +17,6 @@ export class PlaceDetailsComponent {
     this.pid = this.route.snapshot.paramMap.get('id') as string;
   }
 
-  ngAfterViewInit(): void {
-    // set height of container to be the height of the 75
-    const height = this.container.nativeElement.parentElement.offsetHeight;
-    this.container.nativeElement.height = height;
-    console.log(height);
-  }
-
   ngOnInit(): void {
     var map = new google.maps.Map(document.createElement('div'), {
       center: { lat: -33.866, lng: 151.196 },
