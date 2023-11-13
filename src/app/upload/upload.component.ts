@@ -5,13 +5,14 @@ import { AuthService } from '../auth.service';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 import { v4 as uuid } from 'uuid';
 import { createReview } from 'src/graphql/mutations';
-import { listReviews } from 'src/graphql/queries';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
 })
 export class UploadComponent {
+  pid: string = '';
   user: CognitoUser | null = null;
   form: FormGroup = this.fb.group({
     title: [''],
@@ -19,7 +20,13 @@ export class UploadComponent {
     video: [null],
   });
 
-  constructor(private fb: FormBuilder, private auth: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private route: ActivatedRoute
+  ) {
+    this.pid = this.route.snapshot.paramMap.get('pid') as string;
+
     auth.user.subscribe((user) => {
       this.user = user;
     });
@@ -44,6 +51,7 @@ export class UploadComponent {
 
     const review = {
       id: uuid(),
+      pid: this.pid,
       uid: this.user?.getUsername(),
       title,
       description,

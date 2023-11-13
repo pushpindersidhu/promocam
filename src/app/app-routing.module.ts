@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'places', component: PlacesComponent },
   { path: 'places/:id', component: PlaceDetailsComponent },
   { path: 'videos', component: VideosComponent },
-  { path: 'upload', component: UploadComponent },
+  { path: 'upload/:pid', component: UploadComponent },
   { path: '', redirectTo: '/places', pathMatch: 'full' },
 ];
 
