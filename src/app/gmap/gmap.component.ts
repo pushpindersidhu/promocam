@@ -4,7 +4,14 @@ import { LocationService } from '../location.service';
 @Component({
   selector: 'app-gmap',
   templateUrl: './gmap.component.html',
-  styles: [],
+  styles: [
+    `
+      :host {
+        width: 100%;
+        height: 100%;
+      }
+    `,
+  ],
 })
 export class GmapComponent {
   constructor(private locationService: LocationService) {}
