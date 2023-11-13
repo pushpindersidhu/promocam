@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  Input,
   NgZone,
   OnInit,
   QueryList,
@@ -18,6 +19,8 @@ export class VideosComponent implements OnInit {
   @ViewChildren('videoPlayer') videoPlayers: QueryList<
     ElementRef<HTMLVideoElement>
   > = new QueryList();
+
+  @Input() pid = '';  
 
   muted = true;
 
@@ -65,7 +68,7 @@ export class VideosComponent implements OnInit {
       graphqlOperation(listReviews, {
         filter: {
           pid: {
-            eq: 'ChIJV0ymi4ktflMRRjFFeqmhJC0',
+            eq: this.pid,
           },
         },
         limit: 100,

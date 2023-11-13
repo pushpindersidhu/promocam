@@ -9,8 +9,11 @@ export class PlaceDetailsComponent {
   placeDetails: google.maps.places.PlaceResult | null = null;
   photoIdx = 0;
   photoUrl: string | null = null;
+  pid = '';
 
-  constructor(private ngZone: NgZone, private route: ActivatedRoute) {}
+  constructor(private ngZone: NgZone, private route: ActivatedRoute) {
+    this.pid = this.route.snapshot.paramMap.get('id') as string;
+  }
 
   ngOnInit(): void {
     var map = new google.maps.Map(document.createElement('div'), {
@@ -19,7 +22,7 @@ export class PlaceDetailsComponent {
     });
 
     var request = {
-      placeId: this.route.snapshot.paramMap.get('id') as string,
+      placeId: this.pid,
     };
 
     const service = new google.maps.places.PlacesService(map);
