@@ -12,6 +12,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { VideosComponent } from './videos/videos.component';
 import { UploadComponent } from './upload/upload.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     LoadingComponent,
     VideosComponent,
     UploadComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

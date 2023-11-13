@@ -1,6 +1,6 @@
-<div class="p-4" *ngIf="placeDetails">
-  <app-videos [pid]="pid"></app-videos>
-  <div class="relative">
+<div class="grid grid-cols-3 w-full h-full overflow-hidden" *ngIf="placeDetails">
+  <app-videos [pid]="pid" class="col-span-1 h-[700px] items-center"></app-videos>
+  <!-- <div class="relative">
     <div
       class="absolute bottom-0 left-0 right-0 z-[2] mx-[15%] mb-4 flex list-none justify-center p-0"
     >
@@ -85,9 +85,9 @@
         >Next</span
       >
     </button>
-  </div>
+  </div> -->
 
-  <div class="m-16">
+  <div class="w-full h-full overflow-y-scroll col-span-2">
     <h2 class="text-3xl font-semibold mb-4">
       {{ placeDetails.name }}
       <img

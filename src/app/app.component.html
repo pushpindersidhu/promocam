@@ -1,44 +1,5 @@
-<div class="w-full h-screen flex flex-col">
-  <div
-    class="flex items-center justify-between px-8 flex-row w-full h-16 shrink-0 bg-gray-100"
-  >
-    <a class="text-md font-semibold" routerLink="/">PromoCam</a>
-
-    <div *ngIf="isAuthenticated" class="text-md font-semibold">
-      {{ username }}
-    </div>
-    <button
-      class="px-4 py-2 border-[1px] text-sm rounded-md border-sky-500"
-      (click)="signInWithGoogle()"
-      *ngIf="!isAuthenticated"
-    >
-      Sign in with Google
-    </button>
-    <button
-      class="px-4 py-2 border-[1px] text-sm rounded-md border-sky-500"
-      (click)="signOut()"
-      *ngIf="isAuthenticated"
-    >
-      Sign out
-    </button>
-  </div>
-  <div class="flex items-center justify-evenly flex-row p-4">
-    <a
-      class="text-md font-semibold px-4 py-2 border-sky-500"
-      routerLinkActive="border-b-2"
-      routerLink="/places"
-    >
-      Places
-    </a>
-    <a
-      class="text-md font-semibold px-4 py-2 border-sky-500"
-      routerLinkActive="border-b-2"
-      routerLink="/map"
-    >
-      Map
-    </a>
-  </div>
-
+<div class="w-full h-screen overflow-y-hidden">
+  <app-navbar></app-navbar>
   <div class="w-full grow px-4">
     <app-loading *ngIf="isLoading"></app-loading>
     <router-outlet *ngIf="!isLoading"></router-outlet>
