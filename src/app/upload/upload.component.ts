@@ -6,6 +6,7 @@ import { CognitoUser } from 'amazon-cognito-identity-js';
 import { v4 as uuid } from 'uuid';
 import { createReview } from 'src/graphql/mutations';
 import { ActivatedRoute } from '@angular/router';
+import { ToastService, ToastType } from '../services/toast.service';
 
 @Component({
   selector: 'app-upload',
@@ -23,7 +24,8 @@ export class UploadComponent {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toast: ToastService
   ) {
     this.pid = this.route.snapshot.paramMap.get('pid') as string;
 
@@ -58,6 +60,17 @@ export class UploadComponent {
       video: key,
     };
 
-    await API.graphql(graphqlOperation(createReview, { input: review }));
+    const result = await API.graphql(
+      graphqlOperation(createReview, { input: review })
+    );
+
+    console.log('result: ', result);
+
+    if (result) {
+      this.toast.show({
+        msg: 'Review uploaded successfully.',
+        type: ToastType.SUCCESS
+      });
+    }
   }
 }
