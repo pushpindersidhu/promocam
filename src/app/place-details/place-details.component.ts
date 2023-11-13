@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './place-details.component.html',
 })
 export class PlaceDetailsComponent {
+  @ViewChild('container') container: any;
+
   placeDetails: google.maps.places.PlaceResult | null = null;
   photoIdx = 0;
   photoUrl: string | null = null;
@@ -13,6 +15,13 @@ export class PlaceDetailsComponent {
 
   constructor(private ngZone: NgZone, private route: ActivatedRoute) {
     this.pid = this.route.snapshot.paramMap.get('id') as string;
+  }
+
+  ngAfterViewInit(): void {
+    // set height of container to be the height of the 75
+    const height = this.container.nativeElement.parentElement.offsetHeight;
+    this.container.nativeElement.height = height;
+    console.log(height);
   }
 
   ngOnInit(): void {

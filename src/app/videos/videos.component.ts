@@ -20,7 +20,7 @@ export class VideosComponent implements OnInit {
     ElementRef<HTMLVideoElement>
   > = new QueryList();
 
-  @Input() pid = '';  
+  @Input() pid = 'ChIJYSt-YlwsflMR_kCtUZKkJgM';
 
   muted = true;
 
