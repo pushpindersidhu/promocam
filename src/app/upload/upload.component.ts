@@ -27,15 +27,12 @@ export class UploadComponent {
     private route: ActivatedRoute,
     private toast: ToastService
   ) {
-    this.pid = this.route.snapshot.paramMap.get('pid') as string;
-
-    auth.user.subscribe((user) => {
+    this.auth.checkInitialLoginStatus();
+    this.auth.user.subscribe((user) => {
       this.user = user;
     });
 
-    if (!this.auth.user) {
-      this.auth.googleSocialSignIn();
-    }
+    this.pid = this.route.snapshot.paramMap.get('pid') as string;
   }
 
   ngOnInit(): void {}
@@ -46,6 +43,14 @@ export class UploadComponent {
   }
 
   async onSubmit() {
+    if (!this.user) {
+      this.toast.show({
+        msg: 'You must be signed in to upload a review.',
+        type: ToastType.ERROR,
+      });
+      return;
+    }
+
     const { title, description, video } = this.form.value;
     const { key } = await Storage.put(`${uuid()}.mp4`, video, {
       contentType: 'video/mp4',
@@ -54,7 +59,7 @@ export class UploadComponent {
     const review = {
       id: uuid(),
       pid: this.pid,
-      uid: this.user?.getUsername(),
+      uid: this.user.getUsername(),
       title,
       description,
       video: key,
@@ -69,7 +74,7 @@ export class UploadComponent {
     if (result) {
       this.toast.show({
         msg: 'Review uploaded successfully.',
-        type: ToastType.SUCCESS
+        type: ToastType.SUCCESS,
       });
     }
   }
