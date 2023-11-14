@@ -15,7 +15,6 @@ export class NavbarComponent {
   constructor(private auth: AuthService, private zone: NgZone) {
     this.auth.user.subscribe((user) => {
       this.zone.run(() => {
-        console.log('user:', user);
         this.user = user;
         this.email = this.user?.attributes?.email;
         this.isAuthenticated = !!user;
