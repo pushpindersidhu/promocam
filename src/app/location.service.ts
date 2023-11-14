@@ -18,10 +18,15 @@ export class LocationService {
 
   constructor() {
     if (!this.userLocationSubject.value) {
-      this.isLoadingSubject.next(true);
-      this.getCurrentLocation();
+      const cachedLocation = localStorage.getItem('userLocation');
+      if (cachedLocation) {
+        const coordinates: GeolocationCoordinates = JSON.parse(cachedLocation);
+        this.userLocationSubject.next(coordinates);
+      } else {
+        this.isLoadingSubject.next(true);
+        this.getCurrentLocation();
+      }
       this.watchLocationChanges();
-      console.log('Location service initialized.');
     }
   }
 
