@@ -9,7 +9,7 @@ export class AppComponent {
 
   constructor(private locationService: LocationService) {
     this.locationService.isLoading$.subscribe((isLoading) => {
-      this.isLoading = false;
+      this.isLoading = isLoading;
     });
   }
 
