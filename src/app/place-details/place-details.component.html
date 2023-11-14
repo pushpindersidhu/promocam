@@ -1,5 +1,5 @@
-<div #container class="flex flex-row w-full px-8 h-[80vh]" *ngIf="placeDetails">
-  <app-videos [pid]="pid" class="w-1/3 shrink-0"></app-videos>
+<div #container class="flex flex-row w-full h-[80vh]" *ngIf="placeDetails">
+  <app-videos [pid]="pid" class="lg:w-1/3 w-1/2 shrink-0 mx-2"></app-videos>
   <!-- <div class="relative">
     <div
       class="absolute bottom-0 left-0 right-0 z-[2] mx-[15%] mb-4 flex list-none justify-center p-0"
@@ -87,7 +87,7 @@
     </button>
   </div> -->
 
-  <div class="w-2/3 h-full overflow-y-scroll">
+  <div class="lg:w-2/3 w-1/2 h-full overflow-y-scroll mx-2 pr-2">
     <h2 class="text-3xl font-semibold">
       {{ placeDetails.name }}
     </h2>
