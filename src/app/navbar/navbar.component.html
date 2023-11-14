@@ -20,60 +20,51 @@
     </a>
   </div>
 
-  <div class="flex items-center justify-evenly flex-row col-span-1 ml-auto">
-    <button class="flex text-sm bg-gray-800 rounded-full">
-      <img
-        class="w-10 h-10 rounded-full object-cover"
-        src="https://source.unsplash.com/random/?person"
-        alt="user photo"
-      />
-    </button>
-
-    <div
-      class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
-    >
-      <div class="px-4 py-3">
-        <span class="block text-sm text-gray-900 dark:text-white"
-          >Bonnie Green</span
-        >
-        <span class="block text-sm text-gray-500 truncate dark:text-gray-400"
-          >name@flowbite.com</span
-        >
-      </div>
-      <ul class="py-2">
-
-        <li>
-          <a
-            href="#"
-            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-            >Sign out</a
-          >
-        </li>
-      </ul>
-    </div>
+  <div
+    class="flex items-center justify-evenly flex-row col-span-1 ml-auto relative"
+    (click)="toggleDropdown()"
+  >
     <button
-      data-collapse-toggle="navbar-user"
-      type="button"
-      class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-      aria-controls="navbar-user"
-      aria-expanded="false"
+      class="flex text-sm bg-white text-gray-200 rounded-full w-8 h-8 shadow-sm hover:scale-105"
     >
-      <span class="sr-only">Open main menu</span>
       <svg
-        class="w-5 h-5"
-        aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 17 14"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        class="p-1"
       >
         <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M1 1h15M1 7h15M1 13h15"
+          fill="currentColor"
+          d="M12 12q-1.65 0-2.825-1.175T8 8q0-1.65 1.175-2.825T12 4q1.65 0 2.825 1.175T16 8q0 1.65-1.175 2.825T12 12Zm-8 8v-2.8q0-.85.438-1.563T5.6 14.55q1.55-.775 3.15-1.163T12 13q1.65 0 3.25.388t3.15 1.162q.725.375 1.163 1.088T20 17.2V20H4Z"
         />
       </svg>
     </button>
+
+    <div
+      #dropdown
+      class="absolute top-10 right-0 bg-gray-100 rounded-md shadow-md hidden"
+    >
+      <div class="w-64 flex flex-col justify-center items-center">
+        <div class="w-56 text-md font-semibold px-4 py-4 truncate" *ngIf="isAuthenticated">
+          {{ email }}
+        </div>
+        <button
+          class="text-sm font-semibold px-4 py-4 hover:underline"
+          *ngIf="!isAuthenticated"
+          (click)="signInWithGoogle()"
+        >
+          Login with Google
+        </button>
+
+        <button
+          class="text-md font-semibold px-4 py-4 hover:underline"
+          *ngIf="isAuthenticated"
+          (click)="signOut()"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
   </div>
 </nav>
