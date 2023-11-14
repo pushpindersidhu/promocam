@@ -18,7 +18,7 @@ import { ToastService } from '../../services/toast.service';
         'closed',
         style({
           visibility: 'hidden',
-          right: '-400px',
+          right: '0px',
         })
       ),
       state(
