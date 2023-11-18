@@ -24,9 +24,8 @@ export class LocationService {
         const coordinates: GeolocationCoordinates = JSON.parse(cachedLocation);
         this.userLocationSubject.next(coordinates);
         this.isLoadingSubject.next(false);
-      } else {
-        this.getCurrentLocation();
       }
+      this.getCurrentLocation();
 
       this.watchLocationChanges();
     }
@@ -76,10 +75,17 @@ export class LocationService {
         (position: GeolocationPosition) => {
           const coordinates: GeolocationCoordinates = position.coords;
           this.userLocationSubject.next(coordinates);
+          localStorage.setItem(
+            'userLocation',
+            JSON.stringify({
+              latitude: coordinates.latitude,
+              longitude: coordinates.longitude,
+            })
+          );
           console.log('User location changed:', coordinates);
         },
         (error: GeolocationPositionError) => {
-          console.error('Error watching user location:', error.message);
+          console.log('Error watching user location:', error);
         }
       );
     } else {
