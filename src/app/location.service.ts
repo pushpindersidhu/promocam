@@ -12,9 +12,13 @@ export class LocationService {
   >([]);
   private isLoadingSubject = new BehaviorSubject<boolean>(false);
 
+  private userAtPlaceSubject =
+    new BehaviorSubject<google.maps.places.PlaceResult | null>(null);
+
   userLocation$ = this.userLocationSubject.asObservable();
   placesList$ = this.placesListSubject.asObservable();
   isLoading$ = this.isLoadingSubject.asObservable();
+  userAtPlace$ = this.userAtPlaceSubject.asObservable();
 
   constructor() {
     if (!this.userLocationSubject.value) {
@@ -26,9 +30,15 @@ export class LocationService {
         this.isLoadingSubject.next(false);
       }
       this.getCurrentLocation();
-
+      this.getNearbyPlaces();
       this.watchLocationChanges();
     }
+
+    this.userLocationSubject.subscribe((userLocation) => {
+      if (userLocation) {
+        this.getNearbyPlaces();
+      }
+    });
   }
 
   private getCurrentLocation() {
@@ -83,6 +93,7 @@ export class LocationService {
             })
           );
           console.log('User location changed:', coordinates);
+          this.checkIfUserAtAnyPlace();
         },
         (error: GeolocationPositionError) => {
           console.log('Error watching user location:', error);
@@ -118,10 +129,51 @@ export class LocationService {
       (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK && results) {
           this.updatePlacesList(results);
+          this.checkIfUserAtAnyPlace();
         } else {
-          console.error('Error fetching nearby places:', status);
+          console.log("Couldn't get nearby places.");
         }
       }
     );
+  }
+
+  private updateUserAtPlace(
+    userAtPlace: google.maps.places.PlaceResult | null
+  ) {
+    this.userAtPlaceSubject.next(userAtPlace);
+  }
+
+  checkIfUserAtAnyPlace() {
+    const userLocation = this.userLocationSubject.value;
+    const placesList = this.placesListSubject.value;
+
+    if (!userLocation || !placesList || placesList.length === 0) {
+      console.log(userLocation, placesList);
+      return;
+    }
+
+    const userLatLng = new google.maps.LatLng(
+      userLocation.latitude,
+      userLocation.longitude
+    );
+
+    const radiusThreshold = 200;
+
+    const userAtPlace = placesList.find((place) => {
+      const placeLatLng = place.geometry?.location;
+      if (placeLatLng) {
+        const distance = google.maps.geometry.spherical.computeDistanceBetween(
+          userLatLng,
+          placeLatLng
+        );
+
+        return distance <= radiusThreshold;
+      }
+      return false;
+    });
+
+    console.log('User at place:', userAtPlace?.name);
+
+    this.updateUserAtPlace(userAtPlace || null);
   }
 }
