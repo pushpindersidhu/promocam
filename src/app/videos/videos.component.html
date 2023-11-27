@@ -2,16 +2,14 @@
   <div
     class="h-full w-full rounded-md overflow-scroll max-w-md snap-mandatory snap-y no-scrollbar"
   >
-    <div
-      *ngFor="let review of reviews"
-      class="w-full h-full snap-start relative"
-    >
+    <div *ngFor="let card of cards" class="w-full h-full snap-start relative">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="32"
         height="32"
         viewBox="0 0 24 24"
         (click)="toggleMuted()"
+        *ngIf="card.type === 'video'"
         class="absolute top-0 right-0 w-16 h-16 text-white cursor-pointer p-4 z-10"
       >
         <path
@@ -30,17 +28,16 @@
         muted
         loop
         #videoPlayer
+        *ngIf="card.type === 'video'"
         (loadedmetadata)="onVideoLoad(videoPlayer)"
       >
-        <source src="{{ review.videoUrl }}" type="video/mp4" />
+        <source src="{{ card.url }}" type="video/mp4" />
       </video>
-    </div>
 
-    <div *ngFor="let photo of photos" class="w-full h-full snap-start relative">
       <img
         class="h-full w-full bg-gray-100 object-cover"
-        src="{{ photo }}"
-        alt="..."
+        src="{{ card.url }}"
+        *ngIf="card.type === 'image'"
       />
     </div>
   </div>

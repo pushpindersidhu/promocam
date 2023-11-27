@@ -11,6 +11,11 @@ import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { listReviews } from 'src/graphql/queries';
 import { ListReviewsQuery, Review } from 'src/API';
 
+interface Card {
+  url: string;
+  type: 'image' | 'video';
+}
+
 @Component({
   selector: 'app-videos',
   templateUrl: './videos.component.html',
@@ -24,6 +29,19 @@ export class VideosComponent implements OnInit {
   @Input() photos: string[] = [];
   @Input() reviews: (Review & { videoUrl: string })[] = [];
 
+  cards: Card[] = [];
+
+  ngOnChanges() {
+    this.cards = [];
+    this.cards = this.cards.concat(
+      this.reviews.map((review) => ({ url: review.videoUrl, type: 'video' }))
+    );
+
+    this.cards = this.cards.concat(
+      this.photos.map((photo) => ({ url: photo, type: 'image' }))
+    );
+  }
+
   muted = true;
 
   toggleMuted() {
@@ -34,11 +52,9 @@ export class VideosComponent implements OnInit {
     });
   }
 
-
   constructor(private ngZone: NgZone) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onVideoLoad(videoPlayer: HTMLVideoElement) {
     const options = {

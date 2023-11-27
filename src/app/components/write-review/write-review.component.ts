@@ -16,7 +16,7 @@ export class WriteReviewComponent {
   @Input() pid: string = '';
   user: CognitoUser | null = null;
   form: FormGroup = this.fb.group({
-    review: [''],
+    text: [''],
     rating: [1],
     video: [null],
   });
@@ -49,7 +49,7 @@ export class WriteReviewComponent {
       return;
     }
 
-    const { reviewText, rating, video } = this.form.value;
+    const { text, rating, video } = this.form.value;
     const { key } = await Storage.put(`${uuid()}.mp4`, video, {
       contentType: 'video/mp4',
     });
@@ -58,11 +58,13 @@ export class WriteReviewComponent {
       id: uuid(),
       pid: this.pid,
       uid: this.user.getUsername(),
-      review: reviewText,
+      text,
       rating: rating.toString(),
       video: key,
     };
 
+    console.log('review: ', review);
+    
     const result = await API.graphql(
       graphqlOperation(createReview, { input: review })
     );
