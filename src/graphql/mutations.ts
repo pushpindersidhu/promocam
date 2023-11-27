@@ -16,8 +16,8 @@ export const createReview = /* GraphQL */ `mutation CreateReview(
     id
     pid
     uid
-    title
-    description
+    review
+    rating
     video
     createdAt
     updatedAt
@@ -36,8 +36,8 @@ export const updateReview = /* GraphQL */ `mutation UpdateReview(
     id
     pid
     uid
-    title
-    description
+    review
+    rating
     video
     createdAt
     updatedAt
@@ -56,8 +56,8 @@ export const deleteReview = /* GraphQL */ `mutation DeleteReview(
     id
     pid
     uid
-    title
-    description
+    review
+    rating
     video
     createdAt
     updatedAt

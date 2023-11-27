@@ -13,8 +13,8 @@ export const onCreateReview = /* GraphQL */ `subscription OnCreateReview($filter
     id
     pid
     uid
-    title
-    description
+    review
+    rating
     video
     createdAt
     updatedAt
@@ -30,8 +30,8 @@ export const onUpdateReview = /* GraphQL */ `subscription OnUpdateReview($filter
     id
     pid
     uid
-    title
-    description
+    review
+    rating
     video
     createdAt
     updatedAt
@@ -47,8 +47,8 @@ export const onDeleteReview = /* GraphQL */ `subscription OnDeleteReview($filter
     id
     pid
     uid
-    title
-    description
+    review
+    rating
     video
     createdAt
     updatedAt
