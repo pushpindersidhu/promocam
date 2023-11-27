@@ -22,6 +22,7 @@ export class VideosComponent implements OnInit {
 
   @Input() pid = 'ChIJYSt-YlwsflMR_kCtUZKkJgM';
   @Input() photos: string[] = [];
+  @Input() reviews: (Review & { videoUrl: string })[] = [];
 
   muted = true;
 
@@ -33,14 +34,10 @@ export class VideosComponent implements OnInit {
     });
   }
 
-  reviews: (Review & { videoUrl: string })[] = [];
 
   constructor(private ngZone: NgZone) {}
 
   ngOnInit() {
-    this.ngZone.run(() => {
-      this.getReviews();
-    });
   }
 
   onVideoLoad(videoPlayer: HTMLVideoElement) {

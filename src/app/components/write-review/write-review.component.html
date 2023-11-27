@@ -1,0 +1,83 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="w-full my-8 bg-gray-100 p-8"
+>
+  <!-- rating 5 star radio button by loop -->
+  <div class="flex items-center justify-start mb-8">
+    <span class="block text-gray-700 text-sm font-bold">Rating:</span>
+
+    <div class="flex items-center justify-start ml-4">
+      <span *ngFor="let i of [1, 2, 3, 4, 5]">
+        <input
+          type="radio"
+          name="rating"
+          id="star{{ i }}"
+          value="{{ i }}"
+          formControlName="rating"
+          class="hidden"
+        />
+        <label
+          for="star{{ i }}"
+          class="text-xl cursor-pointer"
+          (click)="setRating(i)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-6 w-6 {{
+              i <= form.value.rating ? 'text-yellow-400' : 'text-gray-300'
+            }}"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m9.362 9.158l-5.268.584c-.19.023-.358.15-.421.343s0
+            .394.14.521c1.566 1.429 3.919 3.569 3.919 3.569c-.002 0-.646
+            3.113-1.074 5.19a.496.496 0 0 0 .734.534c1.844-1.048 4.606-2.624
+            4.606-2.624l4.604 2.625c.168.092.378.09.541-.029a.5.5 0 0 0
+            .195-.505l-1.071-5.191l3.919-3.566a.499.499 0 0
+            0-.28-.865c-2.108-.236-5.269-.586-5.269-.586l-2.183-4.83a.499.499 0 0
+            0-.909 0l-2.183 4.83z"
+            />
+          </svg>
+        </label>
+      </span>
+    </div>
+  </div>
+
+  <div class="mb-4 flex">
+    <label for="review" class="block text-gray-700 text-sm font-bold mb-2"
+      >Review:</label
+    >
+    <textarea
+      id="review"
+      formControlName="review"
+      placeholder="Write your review here..."
+      class="w-full px-3 py-2 border rounded h-32 mx-4"
+    ></textarea>
+  </div>
+
+  <div class="mb-4 flex">
+    <label for="file" class="block text-gray-700 text-sm font-bold mb-2"
+      >Video:</label
+    >
+    <input
+      type="file"
+      id="file"
+      class="w-full px-3 py-2 border rounded mx-7"
+      accept="video/*"
+      (change)="onFileChange($event)"
+    />
+  </div>
+
+  <button
+    type="submit"
+    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800 mx-auto block mt-8"
+  >
+    Submit
+  </button>
+</form>

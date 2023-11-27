@@ -1,5 +1,8 @@
 import { Component, NgZone, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { API, graphqlOperation, Storage } from 'aws-amplify';
+import { ListReviewsQuery, Review } from 'src/API';
+import { listReviews } from 'src/graphql/queries';
 
 @Component({
   selector: 'app-place-details',
@@ -13,12 +16,18 @@ export class PlaceDetailsComponent {
   photoUrl: string | null = null;
   photos: string[] = [];
   pid = '';
+  showWriteReview = false;
+  reviews: (Review & { videoUrl: string })[] = [];
 
   constructor(private ngZone: NgZone, private route: ActivatedRoute) {
     this.pid = this.route.snapshot.paramMap.get('id') as string;
   }
 
   ngOnInit(): void {
+    this.ngZone.run(() => {
+      this.getReviews();
+    });
+
     var map = new google.maps.Map(document.createElement('div'), {
       center: { lat: -33.866, lng: 151.196 },
       zoom: 15,
@@ -106,5 +115,36 @@ export class PlaceDetailsComponent {
         this.photoUrl = photos[this.photoIdx].getUrl();
       }
     });
+  }
+
+  toggleWriteReview(): void {
+    this.showWriteReview = !this.showWriteReview;
+  }
+
+  async getReviews() {
+    const result = await API.graphql(
+      graphqlOperation(listReviews, {
+        filter: {
+          pid: {
+            eq: this.pid,
+          },
+        },
+        limit: 100,
+      })
+    );
+
+    const reviews = (result as { data: ListReviewsQuery; errors: any[] }).data
+      .listReviews?.items as Review[];
+
+    const promises = reviews.map(async (review) => {
+      const videoUrl = await Storage.get(review.video, { expires: 60 });
+      return { ...review, videoUrl };
+    });
+
+    this.reviews = await Promise.all(promises);
+  }
+
+  strToDate(str: string): Date {
+    return new Date(str);
   }
 }

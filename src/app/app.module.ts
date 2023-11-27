@@ -15,6 +15,7 @@ import { UploadComponent } from './upload/upload.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ToastComponent } from './components/toast/toast.component';
+import { WriteReviewComponent } from './components/write-review/write-review.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ToastComponent } from './components/toast/toast.component';
     UploadComponent,
     NavbarComponent,
     ToastComponent,
+    WriteReviewComponent,
   ],
   imports: [
     BrowserModule,
