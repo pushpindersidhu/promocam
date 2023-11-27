@@ -35,5 +35,13 @@
         <source src="{{ review.videoUrl }}" type="video/mp4" />
       </video>
     </div>
+
+    <div *ngFor="let photo of photos" class="w-full h-full snap-start relative">
+      <img
+        class="h-full w-full bg-gray-100 object-cover"
+        src="{{ photo }}"
+        alt="..."
+      />
+    </div>
   </div>
 </div>

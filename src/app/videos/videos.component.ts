@@ -21,6 +21,7 @@ export class VideosComponent implements OnInit {
   > = new QueryList();
 
   @Input() pid = 'ChIJYSt-YlwsflMR_kCtUZKkJgM';
+  @Input() photos: string[] = [];
 
   muted = true;
 

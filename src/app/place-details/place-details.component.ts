@@ -11,6 +11,7 @@ export class PlaceDetailsComponent {
   placeDetails: google.maps.places.PlaceResult | null = null;
   photoIdx = 0;
   photoUrl: string | null = null;
+  photos: string[] = [];
   pid = '';
 
   constructor(private ngZone: NgZone, private route: ActivatedRoute) {
@@ -39,7 +40,12 @@ export class PlaceDetailsComponent {
             this.placeDetails = place;
             if (place && place.photos && place.photos.length > 0) {
               this.photoUrl = place.photos[0].getUrl();
+
+              for (let i = 0; i < place.photos.length; i++) {
+                this.photos.push(place.photos[i].getUrl());
+              }
             }
+
             console.log(this.placeDetails);
           });
         }
