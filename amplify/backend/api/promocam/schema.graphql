@@ -7,7 +7,7 @@ type Review @model {
   id: ID!
   pid: String!
   uid: String!
-  review: String
+  text: String
   rating: Int
   video: String!
 }
