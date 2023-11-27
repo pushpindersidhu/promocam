@@ -13,7 +13,7 @@ export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
     id
     pid
     uid
-    review
+    text
     rating
     video
     createdAt
@@ -32,7 +32,7 @@ export const listReviews = /* GraphQL */ `query ListReviews(
       id
       pid
       uid
-      review
+      text
       rating
       video
       createdAt
