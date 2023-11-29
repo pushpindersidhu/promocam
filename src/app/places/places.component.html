@@ -1,1 +1,17 @@
-<app-card *ngFor="let place of nearbyPlaces" [place]="place"></app-card>
+<div class="min-w-full">
+  <div
+    class="flex flex-row items-center my-3 border-[1px] h-12 border-gray-100 bg-gray-50 rounded-full overflow-hidden"
+  >
+    <div
+      class="flex flex-row items-center justify-center w-full h-full border-r-[1px] border-gray-50 bg-gray-100 hover:cursor-pointer hover:bg-gray-200"
+      *ngFor="
+        let type;
+        of: ['Restaurant', 'Cafe', 'Bar', 'Casino', 'Night Club']
+      "
+    >
+      {{ type }}
+    </div>
+  </div>
+
+  <app-card *ngFor="let place of nearbyPlaces" [place]="place"></app-card>
+</div>
