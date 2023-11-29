@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { WriteReviewComponent } from './components/write-review/write-review.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { WriteReviewComponent } from './components/write-review/write-review.com
     NavbarComponent,
     ToastComponent,
     WriteReviewComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,

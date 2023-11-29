@@ -11,6 +11,8 @@ export class LocationService {
     google.maps.places.PlaceResult[]
   >([]);
   private isLoadingSubject = new BehaviorSubject<boolean>(false);
+  private placeTypeSubject = new BehaviorSubject<string>('night_club');
+  private radiusSubject = new BehaviorSubject<number>(5000);
 
   private userAtPlaceSubject =
     new BehaviorSubject<google.maps.places.PlaceResult | null>(null);
@@ -19,6 +21,8 @@ export class LocationService {
   placesList$ = this.placesListSubject.asObservable();
   isLoading$ = this.isLoadingSubject.asObservable();
   userAtPlace$ = this.userAtPlaceSubject.asObservable();
+  placeType$ = this.placeTypeSubject.asObservable();
+  radius$ = this.radiusSubject.asObservable();
 
   constructor() {
     if (!this.userLocationSubject.value) {
@@ -38,6 +42,16 @@ export class LocationService {
       if (userLocation) {
         this.getNearbyPlaces();
       }
+    });
+
+    this.placeTypeSubject.subscribe(() => {
+      console.log('Place type changed:', this.placeTypeSubject.value);
+      this.getNearbyPlaces();
+    });
+
+    this.radiusSubject.subscribe(() => {
+      console.log('Radius changed:', this.radiusSubject.value);
+      this.getNearbyPlaces();
     });
   }
 
@@ -123,8 +137,8 @@ export class LocationService {
     service.nearbySearch(
       {
         location: location,
-        type: 'night_club',
-        rankBy: google.maps.places.RankBy.DISTANCE,
+        type: this.placeTypeSubject.value,
+        radius: this.radiusSubject.value,
       },
       (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK && results) {
@@ -175,5 +189,13 @@ export class LocationService {
     console.log('User at place:', userAtPlace?.name);
 
     this.updateUserAtPlace(userAtPlace || null);
+  }
+
+  public setPlaceType(placeType: string) {
+    this.placeTypeSubject.next(placeType);
+  }
+
+  public setRadius(radius: number) {
+    this.radiusSubject.next(radius);
   }
 }
