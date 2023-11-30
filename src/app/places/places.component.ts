@@ -8,6 +8,7 @@ import { LocationService } from '../location.service';
 })
 export class PlacesComponent {
   nearbyPlaces: google.maps.places.PlaceResult[] = [];
+  placeType: string = '';
 
   constructor(private locationService: LocationService, private zone: NgZone) {}
 
@@ -16,6 +17,12 @@ export class PlacesComponent {
       this.zone.run(() => {
         this.nearbyPlaces = places;
         console.log(this.nearbyPlaces);
+      });
+    });
+
+    this.locationService.placeType$.subscribe((type) => {
+      this.zone.run(() => {
+        this.placeType = type.replace('_', ' ');
       });
     });
   }

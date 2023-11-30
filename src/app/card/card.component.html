@@ -1,51 +1,74 @@
 <a
   routerLink="/places/{{ place.place_id }}"
   *ngIf="place"
-  class="w-full h-28 flex items-center rounded-lg bg-gray-100 mb-4"
+  class="w-full flex items-start rounded-lg hover:bg-white p-4 hover:shadow-md"
 >
-  <img class="rounded-l-lg w-28 h-28 object-cover" [src]="getPhotoUrl(place)" />
-  <div class="flex flex-col justify-start h-full p-2">
-    <div class="font-semibold text-gray-950 line-clamp-1 text-ellipsis">{{ place.name }}</div>
-    <div class="flex items-center text-sm">
-      <svg
-        class="w-5 h-5 text-green-600"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M10 2a5 5 0 00-5 5c0 3.333 5 10 5 10s5-6.667 5-10a5 5 0 00-5-5zm0 7a2 2 0 100-4 2 2 0 000 4z"
-          clip-rule="evenodd"
-        />
-      </svg>
+  <img class="rounded-lg w-48 h-48 object-cover" [src]="getPhotoUrl(place)" />
+  <div class="flex flex-col justify-center h-full px-4 py-2">
+    <div class="font-semibold text-gray-950 line-clamp-1 text-ellipsis text-md">
+      {{ place.name }}
+    </div>
+    <div class="flex items-center text-sm mt-1">
       {{ place.vicinity }}
     </div>
-    <div
-      class="text-sm flex w-fit px-2 items-center
-    {{
-        place.rating < 3
-          ? 'bg-red-500'
-          : place.rating < 4
-          ? 'bg-yellow-500'
-          : 'bg-green-500'
-      }}
-     text-white rounded"
-    >
+
+    <div class="flex flex-row items-center h-6 mt-1">
+      <span
+        class="text-gray-600 text-xs mr-2 mt-1 bg-gray-200 rounded-md px-2 py-1 font-semibold {{
+          place.price_level <= 2
+            ? 'bg-green-100 text-green-700'
+            : 'bg-yellow-100 text-yellow-700'
+        }}
+        "
+        *ngIf="place.price_level"
+      >
+        {{ "$".repeat(place.price_level) }}
+      </span>
+      <span
+        class="text-gray-400 text-xs mr-2 mt-1 bg-gray-300 rounded-full p-1 font-semibold"
+        *ngIf="place.price_level !== undefined"
+      >
+      </span>
       <svg
-        class="w-4 h-4 text-white"
+        class="w-6 h-6 {{
+          place.rating >= star ? 'text-yellow-500' : 'text-gray-400'
+        }}"
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
+        viewBox="0 0 24 24"
         fill="currentColor"
+        *ngFor="let star of [1, 2, 3, 4, 5]"
       >
         <path
-          fill-rule="evenodd"
-          d="M10 3.879l2.146 4.387 4.804.698-3.478 3.392.82 4.778L10 14.763l-4.292 2.331.82-4.778-3.478-3.392 4.804-.698L10 3.879z"
-          clip-rule="evenodd"
+          fill="currentColor"
+          d="m12 18.275l-4.15 2.5q-.275.175-.575.15t-.525-.2q-.225-.175-.35-.437t-.05-.588l1.1-4.725L3.775 11.8q-.25-.225-.312-.513t.037-.562q.1-.275.3-.45t.55-.225l4.85-.425l1.875-4.45q.125-.3.388-.45t.537-.15q.275 0 .537.15t.388.45l1.875 4.45l4.85.425q.35.05.55.225t.3.45q.1.275.038.563t-.313.512l-3.675 3.175l1.1 4.725q.075.325-.05.588t-.35.437q-.225.175-.525.2t-.575-.15l-4.15-2.5Z"
         />
       </svg>
-      {{ place.rating }}
+      <span class="text-gray-600 text-sm ml-2 mt-1">
+        {{ place.rating }}
+        ({{ place.user_ratings_total }} reviews)
+      </span>
     </div>
-    <img class="w-4 h-4" [src]="place.icon" />
+
+    <div class="flex flex-row items-center mt-2">
+      <span
+        class="text-gray-600 text-xs mr-2 mt-1 bg-gray-200 rounded-md px-2 py-1 font-semibold"
+        *ngFor="let type of placeTypes"
+        >{{ type.replaceAll("_", " ") | titlecase }}</span
+      >
+    </div>
+
+    <div class="flex flex-row items-center mt-2">
+      <span
+        class="text-gray-600 text-xs mr-2 mt-1 bg-gray-200 rounded-md px-2 py-1 font-semibold {{
+          place.opening_hours.isOpen()
+            ? 'bg-green-100 text-green-700'
+            : 'bg-red-100 text-red-700'
+        }}"
+        *ngIf="place.opening_hours"
+        >{{ place.opening_hours.isOpen() ? "Open" : "Closed" }}</span
+      >
+    </div>
   </div>
 </a>
+
+<hr class="w-full my-4 border-gray-100" />
