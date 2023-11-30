@@ -36,7 +36,7 @@ export class SidebarComponent {
   constructor(private locationService: LocationService, private zone: NgZone) {
     this.locationService.placeType$.subscribe((type) => {
       this.zone.run(() => {
-        this.placeType = type.replace('_', ' ');
+        this.placeType = type;
       });
     });
 
