@@ -16,16 +16,16 @@ export class SidebarComponent {
       label: 'Cafes',
     },
     {
+      value: 'night_club',
+      label: 'Night Clubs',
+    },
+    {
       value: 'bar',
       label: 'Bars',
     },
     {
       value: 'casino',
       label: 'Casinos',
-    },
-    {
-      value: 'night_club',
-      label: 'Night Clubs',
     },
   ];
 

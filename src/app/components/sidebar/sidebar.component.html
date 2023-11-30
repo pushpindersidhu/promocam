@@ -34,19 +34,23 @@
   <hr class="my-3" />
 
   <div class="flex flex-col justify-center">
-    <p class="text-sm font-semibold text-gray-700 mb-1">Category</p>
-    <div class="flex flex-col justify-center">
-      <div class="flex items-center mb-1" *ngFor="let t of typesList">
+    <p class="text-sm font-semibold text-gray-700 mb-2">Category</p>
+    <div class="grid grid-cols-2 gap-2">
+      <div class="flex items-center" *ngFor="let t of typesList">
         <input
           id="{{ t.value }}"
           type="radio"
           value=""
           [checked]="placeType === t.value"
           (change)="setPlaceType(t.value)"
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-0"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-0 hidden"
         />
         <label
-          class="ms-2 text-sm font-medium text-gray-900"
+          class="text-xs font-medium text-gray-900 cursor-pointer py-2 px-4 rounded-full hover:bg-gray-100 border-[1px]  {{
+            t.value === placeType
+              ? 'bg-blue-50 text-blue-500 border-blue-500'
+              : 'bg-white border-gray-300'
+          }}"
           for="{{ t.value }}"
         >
           {{ t.label }}
