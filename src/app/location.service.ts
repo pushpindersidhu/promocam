@@ -33,9 +33,9 @@ export class LocationService {
         this.userLocationSubject.next(coordinates);
         this.isLoadingSubject.next(false);
       }
-      this.getCurrentLocation();
+      // this.getCurrentLocation();
       this.getNearbyPlaces();
-      this.watchLocationChanges();
+      // this.watchLocationChanges();
     }
 
     this.userLocationSubject.subscribe((userLocation) => {
