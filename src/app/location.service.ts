@@ -85,6 +85,21 @@ export class LocationService {
     return this.userLocationSubject.value;
   }
 
+  setUserLocation(userLocation: GeolocationCoordinates) {
+    this.userLocationSubject.next(userLocation);
+    this.saveUserLocation();
+  }
+
+  saveUserLocation() {
+    localStorage.setItem(
+      'userLocation',
+      JSON.stringify({
+        latitude: this.userLocationSubject.value!.latitude,
+        longitude: this.userLocationSubject.value!.longitude,
+      })
+    );
+  }
+
   onLocationChange() {
     this.getCurrentLocation();
   }
