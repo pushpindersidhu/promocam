@@ -17,9 +17,11 @@
         <p class="text-sm text-gray-600 mx-1">Sort:</p>
         <select
           class="text-sm font-semibold text-start text-gray-900 cursor-pointer rounded-md focus:outline-none bg-transparent appearance-none"
+          (change)="setSelectedSort($event)"
+          [value]="selectedSort"
         >
-          <option value="highest">Highest Rated</option>
-          <option value="lowest">Lowest Rated</option>
+          <option *ngFor="let sortOption of sortOptions" [value]="sortOption.value">
+            {{ sortOption.label }}
         </select>
       </div>
     </div>
