@@ -50,12 +50,10 @@ export class LocationService {
     });
 
     this.placeTypeSubject.subscribe(() => {
-      console.log('Place type changed:', this.placeTypeSubject.value);
       this.getNearbyPlaces();
     });
 
     this.radiusSubject.subscribe(() => {
-      console.log('Radius changed:', this.radiusSubject.value);
       this.getNearbyPlaces();
     });
 
@@ -130,7 +128,6 @@ export class LocationService {
               longitude: coordinates.longitude,
             })
           );
-          console.log('User location changed:', coordinates);
           this.checkIfUserAtAnyPlace();
         },
         (error: GeolocationPositionError) => {
@@ -188,7 +185,6 @@ export class LocationService {
     const placesList = this.placesListSubject.value;
 
     if (!userLocation || !placesList || placesList.length === 0) {
-      console.log(userLocation, placesList);
       return;
     }
 
@@ -211,8 +207,6 @@ export class LocationService {
       }
       return false;
     });
-
-    console.log('User at place:', userAtPlace?.name);
 
     this.updateUserAtPlace(userAtPlace || null);
   }
