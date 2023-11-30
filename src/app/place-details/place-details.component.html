@@ -8,58 +8,124 @@
     ></app-videos>
 
     <div class="lg:w-2/3 w-1/2 h-full overflow-y-scroll mx-2 pr-2">
-      <h2 class="text-3xl font-semibold">
-        {{ placeDetails.name }}
-      </h2>
-      <div class="flex items-center justify-start mt-2">
-        <img
-          src="{{ placeDetails.icon }}"
-          alt="Place Icon"
-          class="mr-2 w-5 h-5 inline-block"
-        />
-        <div class="flex" *ngIf="placeDetails.rating">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            class="inline-block w-6 h-6 mr-1"
-            *ngFor="let i of [1, 2, 3, 4, 5]"
-          >
-            <path
-              [ngClass]="{
-                'text-yellow-500': placeDetails.rating >= i,
-                'text-gray-300': placeDetails.rating < i
-              }"
-              fill="currentColor"
-              d="m9.362 9.158l-5.268.584c-.19.023-.358.15-.421.343s0
-          .394.14.521c1.566 1.429 3.919 3.569 3.919 3.569c-.002 0-.646
-          3.113-1.074 5.19a.496.496 0 0 0 .734.534c1.844-1.048 4.606-2.624
-          4.606-2.624l4.604 2.625c.168.092.378.09.541-.029a.5.5 0 0 0
-          .195-.505l-1.071-5.191l3.919-3.566a.499.499 0 0
-          0-.28-.865c-2.108-.236-5.269-.586-5.269-.586l-2.183-4.83a.499.499 0 0
-          0-.909 0l-2.183 4.83z"
-            />
-          </svg>
-        </div>
-      </div>
-      <div class="text-md text-gray-700 mt-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          class="inline-block w-6 h-6"
-          viewBox="0 0 24 24"
+      <div class="flex flex-col justify-start py-2">
+        <div
+          class="font-semibold text-gray-950 line-clamp-1 text-ellipsis text-lg"
         >
-          <path
-            fill="currentColor"
-            d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0
-        9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"
-          />
-        </svg>
-        <span>
+          {{ placeDetails.name }}
+        </div>
+        <div class="flex items-center text-sm mt-1">
           {{ placeDetails.formatted_address }}
-        </span>
+        </div>
+
+        <div class="flex flex-row items-center h-6 mt-1">
+          <span
+            class="text-gray-600 text-xs mr-2 mt-1 bg-gray-200 rounded-md px-2 py-1 font-semibold {{
+              placeDetails.price_level <= 2
+                ? 'bg-green-100 text-green-700'
+                : 'bg-yellow-100 text-yellow-700'
+            }}
+        "
+            *ngIf="placeDetails.price_level"
+          >
+            {{ "$".repeat(placeDetails.price_level) }}
+          </span>
+          <span
+            class="text-gray-400 text-xs mr-2 mt-1 bg-gray-300 rounded-full p-1 font-semibold"
+            *ngIf="placeDetails.price_level !== undefined"
+          >
+          </span>
+          <div *ngIf="placeDetails.rating" class="flex flex-row items-center">
+            <svg
+              class="w-6 h-6 {{
+                placeDetails.rating >= star
+                  ? 'text-yellow-500'
+                  : 'text-gray-400'
+              }}"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              *ngFor="let star of [1, 2, 3, 4, 5]"
+            >
+              <path
+                fill="currentColor"
+                d="m12 18.275l-4.15 2.5q-.275.175-.575.15t-.525-.2q-.225-.175-.35-.437t-.05-.588l1.1-4.725L3.775 11.8q-.25-.225-.312-.513t.037-.562q.1-.275.3-.45t.55-.225l4.85-.425l1.875-4.45q.125-.3.388-.45t.537-.15q.275 0 .537.15t.388.45l1.875 4.45l4.85.425q.35.05.55.225t.3.45q.1.275.038.563t-.313.512l-3.675 3.175l1.1 4.725q.075.325-.05.588t-.35.437q-.225.175-.525.2t-.575-.15l-4.15-2.5Z"
+              />
+            </svg>
+          </div>
+          <span class="text-gray-600 text-sm ml-2 mt-1">
+            {{ placeDetails.rating }}
+            ({{ (placeDetails.user_ratings_total || 0) + reviews.length }}
+            reviews)
+          </span>
+        </div>
+
+        <div class="flex flex-row items-center mt-2">
+          <a
+            href="{{ placeDetails.website }}"
+            target="_blank"
+            class="text-sm text-sky-800 bg-sky-100 p-1 rounded-sm"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              class="inline-block w-4 h-4 mr-1"
+            >
+              <path
+                fill="currentColor"
+                d="M7 17q-2.075 0-3.537-1.463T2 12q0-2.075 1.463-3.537T7 7h3q.425 0 .713.288T11 8q0 .425-.288.713T10 9H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h3q.425 0 .713.288T11 16q0 .425-.288.713T10 17H7Zm2-4q-.425 0-.712-.288T8 12q0-.425.288-.712T9 11h6q.425 0 .713.288T16 12q0 .425-.288.713T15 13H9Zm5 4q-.425 0-.712-.288T13 16q0-.425.288-.712T14 15h3q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-3q-.425 0-.712-.288T13 8q0-.425.288-.712T14 7h3q2.075 0 3.538 1.463T22 12q0 2.075-1.463 3.538T17 17h-3Z"
+              />
+            </svg>
+
+            <span class="text-xs font-semibold text-ellipsis ">{{
+              placeDetails.website
+            }}</span>
+          </a>
+
+          <a
+            href="tel:{{ placeDetails.formatted_phone_number }}"
+            class="text-sm text-green-800 bg-green-100 p-1 rounded-sm ml-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              class="inline-block w-4 h-4 mr-1"
+            >
+              <path
+                fill="currentColor"
+                d="M19.95 21q-3.125 0-6.175-1.362t-5.55-3.863q-2.5-2.5-3.862-5.55T3 4.05q0-.45.3-.75t.75-.3H8.1q.35 0 .625.238t.325.562l.65 3.5q.05.4-.025.675T9.4 8.45L6.975 10.9q.5.925 1.187 1.787t1.513 1.663q.775.775 1.625 1.438T13.1 17l2.35-2.35q.225-.225.588-.337t.712-.063l3.45.7q.35.1.575.363T21 15.9v4.05q0 .45-.3.75t-.75.3Z"
+              />
+            </svg>
+
+            <span class="text-xs font-semibold">{{
+              placeDetails.formatted_phone_number
+            }}</span>
+          </a>
+        </div>
+
+        <div class="flex flex-row items-center mt-2">
+          <span
+            class="text-gray-600 text-xs mr-2 mt-1 bg-gray-200 rounded-md px-2 py-1 font-semibold"
+            *ngFor="let type of placeDetails.types"
+            >{{ type.replaceAll("_", " ") | titlecase }}</span
+          >
+        </div>
+
+        <div class="flex flex-row items-center mt-2">
+          <span
+            class="text-gray-600 text-xs mr-2 mt-1 bg-gray-200 rounded-md px-2 py-1 font-semibold {{
+              placeDetails.opening_hours.isOpen()
+                ? 'bg-green-100 text-green-700'
+                : 'bg-red-100 text-red-700'
+            }}"
+            *ngIf="placeDetails.opening_hours"
+            >{{ placeDetails.opening_hours.isOpen() ? "Open" : "Closed" }}</span
+          >
+        </div>
       </div>
 
       <div class="flex flex-row items-center justify-between mt-4">
