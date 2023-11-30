@@ -29,44 +29,59 @@ export class SidebarComponent {
     },
   ];
 
-  radiusList = [
-    {
-      value: 5000,
-      label: '5 km',
-    },
-    {
-      value: 10000,
-      label: '10 km',
-    },
-    {
-      value: 25000,
-      label: '25 km',
-    },
-    {
-      value: 50000,
-      label: '50 km',
-    },
-  ];
-
-  placeType = 'restaurant'
+  placeType = 'restaurant';
   radius = 5000;
+  price: number = 0;
 
-  constructor(private locationService: LocationService, private zone: NgZone) {}
+  constructor(private locationService: LocationService, private zone: NgZone) {
+    this.locationService.placeType$.subscribe((type) => {
+      this.zone.run(() => {
+        this.placeType = type.replace('_', ' ');
+      });
+    });
+
+    this.locationService.radius$.subscribe((radius) => {
+      this.zone.run(() => {
+        this.radius = radius;
+      });
+    });
+
+    this.locationService.price$.subscribe((price) => {
+      this.zone.run(() => {
+        this.price = price.min;
+      });
+    });
+  }
 
   setType(type: string) {
     this.locationService.setPlaceType(type);
   }
 
-  setRadius(radius: number) {
-    console.log('Radius changed:', radius);
-    this.radius = radius;
-    this.locationService.setRadius(radius);
+  setRadius(event: any) {
+    this.radius = event.target.value;
+    this.locationService.setRadius(event.target.value);
   }
 
   setPlaceType(type: string) {
-    console.log('Place type changed:', type);
     this.placeType = type;
     this.locationService.setPlaceType(type);
+  }
+
+  setPrice(price: number) {
+    if (this.price === price) {
+      this.price = 0;
+      this.locationService.setPrice({
+        min: 0,
+        max: 4,
+      });
+      return;
+    }
+
+    this.price = price;
+    this.locationService.setPrice({
+      min: this.price || 0,
+      max: this.price || 4,
+    });
   }
 
   ngOnInit() {}

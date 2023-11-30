@@ -13,6 +13,10 @@ export class LocationService {
   private isLoadingSubject = new BehaviorSubject<boolean>(false);
   private placeTypeSubject = new BehaviorSubject<string>('night_club');
   private radiusSubject = new BehaviorSubject<number>(5000);
+  private priceSubject = new BehaviorSubject<{ min: number; max: number }>({
+    min: 0,
+    max: 4,
+  });
 
   private userAtPlaceSubject =
     new BehaviorSubject<google.maps.places.PlaceResult | null>(null);
@@ -23,6 +27,7 @@ export class LocationService {
   userAtPlace$ = this.userAtPlaceSubject.asObservable();
   placeType$ = this.placeTypeSubject.asObservable();
   radius$ = this.radiusSubject.asObservable();
+  price$ = this.priceSubject.asObservable();
 
   constructor() {
     if (!this.userLocationSubject.value) {
@@ -51,6 +56,10 @@ export class LocationService {
 
     this.radiusSubject.subscribe(() => {
       console.log('Radius changed:', this.radiusSubject.value);
+      this.getNearbyPlaces();
+    });
+
+    this.priceSubject.subscribe(() => {
       this.getNearbyPlaces();
     });
   }
@@ -154,6 +163,8 @@ export class LocationService {
         location: location,
         type: this.placeTypeSubject.value,
         radius: this.radiusSubject.value,
+        minPriceLevel: this.priceSubject.value.min,
+        maxPriceLevel: this.priceSubject.value.max,
       },
       (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK && results) {
@@ -212,5 +223,9 @@ export class LocationService {
 
   public setRadius(radius: number) {
     this.radiusSubject.next(radius);
+  }
+
+  public setPrice(price: { min: number; max: number }) {
+    this.priceSubject.next(price);
   }
 }
