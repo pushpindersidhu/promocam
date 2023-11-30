@@ -84,7 +84,12 @@ export class SidebarComponent {
     });
   }
 
-  ngOnInit() {}
-
-  ngAfterViewInit() {}
+  resetFilters() {
+    this.locationService.setPlaceType('restaurant');
+    this.locationService.setRadius(5000);
+    this.locationService.setPrice({
+      min: 0,
+      max: 4,
+    });
+  }
 }
