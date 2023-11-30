@@ -79,9 +79,21 @@ export class SearchComponent {
           (results, status) => {
             if (status === 'OK') {
               this.ngZone.run(() => {
-                if (results)
-                  this.inputField.nativeElement.value =
-                    results[0].formatted_address;
+                if (results) {
+                  const locality = results[0].address_components.find(
+                    (component) => component.types.includes('locality')
+                  )?.long_name;
+
+                  const administrativeArea = results[0].address_components.find(
+                    (component) => component.types.includes('administrative_area_level_1')
+                  )?.short_name;
+
+                  const country = results[0].address_components.find(
+                    (component) => component.types.includes('country')
+                  )?.short_name;
+
+                  this.inputField.nativeElement.value = `${locality}, ${administrativeArea}, ${country}`;
+                }
               });
             }
           }
