@@ -14,7 +14,7 @@
       </div>
 
       <div class="flex flex-row justify-end items-center">
-        <p class="text-sm text-gray-600 mx-1">Sort: </p>
+        <p class="text-sm text-gray-600 mx-1">Sort:</p>
         <select
           class="text-sm font-semibold text-start text-gray-900 cursor-pointer rounded-md focus:outline-none bg-transparent appearance-none"
         >
@@ -24,7 +24,18 @@
       </div>
     </div>
     <hr class="w-full my-3" />
-    <div class="w-full h-full grid xl:grid-cols-2">
+
+    <div
+      class="w-full h-full flex flex-col items-center justify-center mt-32"
+      *ngIf="!nearbyPlaces.length"
+    >
+      <p class="text-md text-gray-600 mt-4">0 Results Found</p>
+    </div>
+
+    <div
+      class="w-full h-full grid xl:grid-cols-2"
+      *ngIf="nearbyPlaces.length > 0"
+    >
       <app-card
         *ngFor="let place of nearbyPlaces"
         [place]="place"

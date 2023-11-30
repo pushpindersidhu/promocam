@@ -171,7 +171,7 @@ export class LocationService {
           this.updatePlacesList(results);
           this.checkIfUserAtAnyPlace();
         } else {
-          console.log("Couldn't get nearby places.");
+          this.updatePlacesList([]);
         }
       }
     );
