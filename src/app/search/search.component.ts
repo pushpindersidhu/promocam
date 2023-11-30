@@ -1,6 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 
 import { ElementRef, ViewChild } from '@angular/core';
+import { LocationService } from '../location.service';
 
 export interface PlaceSearchResult {
   address: string;
@@ -21,7 +22,10 @@ export class SearchComponent {
   autocomplete: google.maps.places.Autocomplete | undefined;
   searchResult: PlaceSearchResult | undefined;
 
-  constructor(private ngZone: NgZone) {}
+  constructor(
+    private ngZone: NgZone,
+    private locationService: LocationService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -41,12 +45,48 @@ export class SearchComponent {
           iconUrl: place?.icon,
         };
 
+        if (result.location) {
+          const location: GeolocationCoordinates = {
+            latitude: result.location.lat(),
+            longitude: result.location.lng(),
+            accuracy: 0,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          };
+
+          this.locationService.setUserLocation(location);
+        }
+
         this.searchResult = result;
         this.location = {
           latitude: result.location!.lat(),
           longitude: result.location!.lng(),
         } as GeolocationCoordinates;
       });
+    });
+
+    this.locationService.userLocation$.subscribe((location) => {
+      if (location) {
+        const latLng = new google.maps.LatLng(
+          location.latitude,
+          location.longitude
+        );
+
+        new google.maps.Geocoder().geocode(
+          { location: latLng },
+          (results, status) => {
+            if (status === 'OK') {
+              this.ngZone.run(() => {
+                if (results)
+                  this.inputField.nativeElement.value =
+                    results[0].formatted_address;
+              });
+            }
+          }
+        );
+      }
     });
   }
 
