@@ -37,8 +37,9 @@ export class LocationService {
         const coordinates: GeolocationCoordinates = JSON.parse(cachedLocation);
         this.userLocationSubject.next(coordinates);
         this.isLoadingSubject.next(false);
+      } else {
+        this.getCurrentLocation();
       }
-      // this.getCurrentLocation();
       this.getNearbyPlaces();
       // this.watchLocationChanges();
     }
