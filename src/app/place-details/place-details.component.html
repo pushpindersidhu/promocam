@@ -168,6 +168,7 @@
             src="{{ review.uid }}"
             alt="Profile Photo"
             class="w-12 h-12 rounded-full mr-4"
+            referrerpolicy="no-referrer"
             *ngIf="false"
           />
           <svg
@@ -197,18 +198,34 @@
           </div>
         </div>
 
-        <div class="flex flex-row items-center my-3" *ngIf="review.rating">
+
+        <div class="flex flex-row items-center mt-3" *ngIf="review.rating">
           <span
-            *ngFor="let i of [1, 2, 3, 4, 5]"
-            class="w-8 h-5 ml-1 rounded-md"
-            [ngClass]="{
-              'bg-red-500': review.rating < 3 && i <= review.rating,
-              'bg-yellow-500':
-                review.rating >= 3 && review.rating < 4 && i <= review.rating,
-              'bg-green-500': review.rating >= 4 && i <= review.rating,
-              'bg-gray-300': i > review.rating
-            }"
-          ></span>
+            class="text-gray-600 text-sm mr-2 mt-1 px-2 py-1 flex items-center justify-center  {{
+              review.rating >= 4
+                ? 'bg-green-100 text-green-700'
+                : review.rating >= 3
+                ? 'bg-yellow-100 text-yellow-700'
+                : 'bg-red-100 text-red-700'
+            }} rounded-md font-semibold"
+          >
+            Rating:
+            {{ review.rating }}
+          </span>
+          <svg
+            class="w-6 h-6 {{
+              review.rating >= star ? 'text-yellow-500' : 'text-gray-400'
+            }}"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            *ngFor="let star of [1, 2, 3, 4, 5]"
+          >
+            <path
+              fill="currentColor"
+              d="m12 18.275l-4.15 2.5q-.275.175-.575.15t-.525-.2q-.225-.175-.35-.437t-.05-.588l1.1-4.725L3.775 11.8q-.25-.225-.312-.513t.037-.562q.1-.275.3-.45t.55-.225l4.85-.425l1.875-4.45q.125-.3.388-.45t.537-.15q.275 0 .537.15t.388.45l1.875 4.45l4.85.425q.35.05.55.225t.3.45q.1.275.038.563t-.313.512l-3.675 3.175l1.1 4.725q.075.325-.05.588t-.35.437q-.225.175-.525.2t-.575-.15l-4.15-2.5Z"
+            />
+          </svg>
         </div>
         <p class="text-md my-4 text-ellipsis line-clamp-3">{{ review.text }}</p>
       </div>
