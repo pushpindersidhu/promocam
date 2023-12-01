@@ -60,12 +60,12 @@
     <div class="flex flex-row items-center mt-2">
       <span
         class="text-gray-600 text-xs mr-2 mt-1 bg-gray-200 rounded-md px-2 py-1 font-semibold {{
-          place.opening_hours.isOpen()
+          place.opening_hours.open_now
             ? 'bg-green-100 text-green-700'
             : 'bg-red-100 text-red-700'
         }}"
         *ngIf="place.opening_hours"
-        >{{ place.opening_hours.isOpen() ? "Open" : "Closed" }}</span
+        >{{ place.opening_hours.open_now ? "Open" : "Closed" }}</span
       >
     </div>
   </div>
